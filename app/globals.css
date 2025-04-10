@@ -1,0 +1,392 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%; /* Black background */
+    --foreground: 210 40% 98%; /* Light blue text */
+    --card: 0 0% 7%; /* Dark gray card */
+    --card-foreground: 210 40% 98%;
+    --popover: 0 0% 7%; /* Dark gray popover */
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%; /* Bright blue primary */
+    --primary-rgb: 59, 130, 246;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 220 14% 22%; /* Dark blue secondary */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 14% 22%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 30%; /* Medium blue accent */
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 14% 22%;
+    --input: 220 14% 22%;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary) / 0.3);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.5);
+}
+
+/* Animated background */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(
+    -45deg,
+    hsl(var(--background)),
+    hsl(var(--muted)),
+    hsl(var(--background)),
+    hsl(var(--primary) / 0.05)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Card flip animation - Dark Theme */
+.card {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  margin: 0 auto;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.999s;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+  background-color: hsl(var(--card));
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: center;
+  border: 2px solid hsl(var(--primary));
+  border-radius: 10px;
+  justify-content: center;
+  font-size: 24px;
+  transform: rotateY(0deg);
+  padding: 20px;
+  text-align: center;
+}
+
+.card-back {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: center;
+  border: 2px solid hsl(var(--primary));
+  border-radius: 10px;
+  justify-content: center;
+  font-size: 18px;
+  transform: rotateY(180deg);
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* Make card responsive */
+@media (min-width: 640px) {
+  .card {
+    width: 400px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 500px;
+    height: 300px;
+  }
+}
+
+/* Animated heading styles */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animated-heading {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--primary)) 25%,
+    hsl(var(--primary)) 50%,
+    hsl(var(--background)) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s infinite;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .card {
+    width: 100%;
+    height: 180px;
+  }
+
+  .card-front,
+  .card-back {
+    font-size: 16px;
+    padding: 15px;
+  }
+}
+
+/* Modern timeline card animations */
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
+  }
+}
+
+.pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+/* Interest card animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Add these styles at the end of the file for the skill badges and animations */
+
+/* Skill card animations */
+.skill-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.skill-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(var(--primary-rgb), 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.skill-card:hover::before {
+  left: 100%;
+}
+
+@media (max-width: 640px) {
+  .skill-card {
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* Skill section responsive adjustments */
+@media (max-width: 768px) {
+  #skills .grid {
+    gap: 1rem;
+  }
+}
+
+/* Masked text animation styles */
+.masked-text-container {
+  overflow: hidden;
+  text-align: center;
+}
+
+.masked-text {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: transparent;
+  background-image: url("https://images.unsplash.com/photo-1732535725600-f805d8b33c9c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: 200%;
+  background-position: 0 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-background 5s infinite alternate linear;
+}
+
+@keyframes animate-background {
+  0% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 640px) {
+  .masked-text {
+    font-size: 1.2rem;
+  }
+}
+
+/* Glow button styles */
+.glow-on-hover {
+  width: 220px;
+  height: 50px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.glow-on-hover:before {
+  content: "";
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.glow-on-hover:active {
+  color: #000;
+}
+
+.glow-on-hover:active:after {
+  background: transparent;
+}
+
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
+
+.glow-on-hover:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Mobile responsiveness for glow button */
+@media (max-width: 640px) {
+  .glow-on-hover {
+    width: 180px;
+    height: 40px;
+    font-size: 0.75rem;
+  }
+}
